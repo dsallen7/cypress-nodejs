@@ -26,12 +26,11 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    uses: cypress-io/github-action@v6
-    with:
-      config-file: cypress.config.js
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
     - name: Run All Tests
+      uses: cypress-io/github-action@v6
+      with:
+        config-file: cypress.config.js
       run: npx cypress run
