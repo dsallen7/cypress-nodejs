@@ -1,10 +1,8 @@
 /// <reference types="cypress" />
 
-describe('Checks 8to4studios navbar', () =>{
-    beforeEach( () => {
-        cy.env(['username', 'password']).then(({username, password}) => {
-            cy.log('Username: ' + username);
-            cy.log('Password: ' + password);
+describe('Checks 8to4studios navbar', () => {
+    beforeEach(() => {
+        cy.env(['username', 'password']).then(({ username, password }) => {
             expect(username, 'password was set').to.be.a('string').and.not.be.empty;
             expect(password, 'password was set').to.be.a('string').and.not.be.empty;
         });
@@ -29,18 +27,18 @@ describe('Checks 8to4studios navbar', () =>{
 
     it('Log in and out', () => {
         cy.get('#loginmenubtn').click()
-        cy.fixture('8to4studios').then((data) => {
-
-            cy.env(['username', 'password']).then(({username, password}) => {
-                expect(username, 'password was set').to.be.a('string').and.not.be.empty;
-                expect(password, 'password was set').to.be.a('string').and.not.be.empty;            
-                cy.get('input[name="username"]').first().type(username);
-                cy.get('input[name="password"]').first().type(password, {log: false});
-            });
+        cy.env(['username', 'password']).then(({ username, password }) => {
+            cy.get('input[name="username"]').first().type(username);
+            cy.get('input[name="password"]').first().type(password, { log: false });
             cy.get('#loginbtn').click();
 
-            cy.get('#userDropdownButton').click();
-            cy.get('#logoutbtn').click();
+            cy.get('#userDropdownButton').should('have.text', username);
+        });
+
+        cy.get('#userDropdownButton').click();
+        cy.get('#logoutbtn').click();
+
+        cy.fixture('8to4studios').then((data) => {
         });
     });
 });
