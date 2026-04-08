@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Checks 8to4studios navbar', () => {
+describe('8to4studios forum', () => {
 
     beforeEach(() => {
         cy.visit('https://8to4studios.com/')
@@ -10,7 +10,7 @@ describe('Checks 8to4studios navbar', () => {
         const delay = 3000;
 
         // Login
-        cy.loginRequest('username', 'password');
+        cy.loginRequest('testuser1');
 
         // Navigate to forums
         cy.get('#mainmenuforumbtn').click();

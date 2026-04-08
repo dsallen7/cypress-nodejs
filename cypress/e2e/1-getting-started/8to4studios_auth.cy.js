@@ -1,19 +1,32 @@
 /// <reference types="cypress" />
 
-describe('Checks 8to4studios navbar', () => {
+describe('8to4studios authentication', () => {
     beforeEach(() => {
-        cy.env(['username', 'password']).then(({ username, password }) => {
-            expect(username, 'password was set').to.be.a('string').and.not.be.empty;
-            expect(password, 'password was set').to.be.a('string').and.not.be.empty;
-        });
         cy.visit('https://8to4studios.com/')
     });
 
+    it('Log in and out using UI', () => {
+        const username = 'testuser1';
+
+        cy.get('#loginmenubtn').click()
+        cy.env(['password']).then(({ password }) => {
+            cy.get('input[name="username"]').first().type(username);
+            cy.get('input[name="password"]').first().type(password, { log: false });
+            cy.get('#loginbtn').click();
+
+            cy.get('#userDropdownButton').should('have.text', username);
+        });
+
+        cy.get('#userDropdownButton').click();
+        cy.get('#logoutbtn').click();
+    });
+
     it('Log in using cy.request', () => {
+        const username = 'testuser1';
         var csrfmiddlewaretoken;
         cy.get('input[name="csrfmiddlewaretoken"]').invoke('val').then(mw_token_value => {csrfmiddlewaretoken = mw_token_value;} );
         
-        cy.env(['username', 'password']).then(({ username, password }) => {
+        cy.env(['password']).then(({ password }) => {
         
             cy.request({
                 headers: {
