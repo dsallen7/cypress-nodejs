@@ -30,9 +30,9 @@ Cypress.Commands.add('home', () => {
     cy.get('#banner').click();
 });
 
-Cypress.Commands.add('login', (username, password) => {   
+Cypress.Commands.add('login', (username) => {   
     cy.get('#loginmenubtn').click()
-    cy.env(['username', 'password']).then(({ username, password }) => {
+    cy.env(['password']).then(({ password }) => {
         cy.get('input[name="username"]').first().type(username);
         cy.get('input[name="password"]').first().type(password, { log: false });
         cy.get('#loginbtn').click();
@@ -41,11 +41,11 @@ Cypress.Commands.add('login', (username, password) => {
     });
 });
 
-Cypress.Commands.add('loginRequest', (username, password) => {
+Cypress.Commands.add('loginRequest', (username) => {
     var csrfmiddlewaretoken;
     cy.get('input[name="csrfmiddlewaretoken"]').invoke('val').then(mw_token_value => {csrfmiddlewaretoken = mw_token_value;} );
     
-    cy.env(['username', 'password']).then(({ username, password }) => {
+    cy.env(['password']).then(({ password }) => {
     
         cy.request({
             headers: {
