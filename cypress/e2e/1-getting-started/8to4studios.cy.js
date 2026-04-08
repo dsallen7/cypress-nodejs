@@ -2,6 +2,12 @@
 
 describe('Checks 8to4studios navbar', () =>{
     beforeEach( () => {
+        cy.env(['username', 'password']).then(({username, password}) => {
+            cy.log('Username: ' + username);
+            cy.log('Password: ' + password);
+            expect(username, 'password was set').to.be.a('string').and.not.be.empty;
+            expect(password, 'password was set').to.be.a('string').and.not.be.empty;
+        });
         cy.visit('https://8to4studios.com/')
     });
 
@@ -19,5 +25,22 @@ describe('Checks 8to4studios navbar', () =>{
     it('Check forum post exists', () => {
         cy.get('#mainmenuforumbtn').click();
         cy.contains('Find Me').should('have.text', 'Find Me');
+    });
+
+    it('Log in and out', () => {
+        cy.get('#loginmenubtn').click()
+        cy.fixture('8to4studios').then((data) => {
+
+            cy.env(['username', 'password']).then(({username, password}) => {
+                expect(username, 'password was set').to.be.a('string').and.not.be.empty;
+                expect(password, 'password was set').to.be.a('string').and.not.be.empty;            
+                cy.get('input[name="username"]').first().type(username);
+                cy.get('input[name="password"]').first().type(password, {log: false});
+            });
+            cy.get('#loginbtn').click();
+
+            cy.get('#userDropdownButton').click();
+            cy.get('#logoutbtn').click();
+        });
     });
 });
