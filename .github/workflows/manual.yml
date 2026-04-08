@@ -9,5 +9,5 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v7
         env: # Or as an environment variable
-          CYPRESS_USERNAME: ${{ secrets.CYPRESS_username }}
-          CYPRESS_PASSWORD: ${{ secrets.CYPRESS_password }}
+          CYPRESS_username: ${{ secrets.CYPRESS_USERNAME }}
+          CYPRESS_password: ${{ secrets.CYPRESS_PASSWORD }}
